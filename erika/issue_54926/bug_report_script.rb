@@ -6,9 +6,9 @@ gemfile(true) do
   source "https://rubygems.org"
 
   gem "pry-byebug"
-  # TODO: use tag 8.0.1.alpha
-  gem "rails", github: "rails/rails", branch: "main"
-  # If you want to test against edge Rails replace the previous line with this:
+
+  gem "rails", github: "rails/rails", tag: "v8.0.1" # bad
+  #gem "rails", github: "jg23497/rails", branch: "feature/default-to-sha256-for-cookie-signing" # good
 end
 
 require "action_controller/railtie"
@@ -45,7 +45,7 @@ class BugTest < ActiveSupport::TestCase
   def test_signed_cookies
     get "/"
     assert last_response.ok?
-    assert_equal last_response.body, "SHA256"
+    assert_equal "SHA256", last_response.body
   end
 
   private
